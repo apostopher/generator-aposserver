@@ -1,12 +1,20 @@
 "use strict"
 
+http       = require 'http'
 express    = require 'express'
+<% if(needs_socketio) { %>
+socketio   = require 'socket.io'
+<% } %>
 bodyParser = require 'body-parser'
 config     = require './config/config'
 
 class <%= server_name %>
   constructor: ->
     @app = express()
+    @server = http.createServer @app
+    <% if(needs_socketio) { %>
+    @io  = socketio @server
+    <% } %>
     @app.use express.static __dirname
     @app.use bodyParser()
     @configure()
@@ -16,7 +24,7 @@ class <%= server_name %>
     
   start: (callback) ->
     port = +process.argv[2] || config.port || 9090
-    @app.listen port, () -> callback port
+    @server.listen port, () -> callback port
 
 if require.main is module
   server_instance = new <%= server_name %>()

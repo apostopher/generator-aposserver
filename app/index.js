@@ -41,6 +41,12 @@ var AposserverGenerator = yeoman.generators.Base.extend({
     },
     {
       type: 'confirm',
+      name: 'socketio_support',
+      message: 'Do you want me to include socket.io support?',
+      default: false
+    },
+    {
+      type: 'confirm',
       name: 'nginx_support',
       message: 'Do you want me to generate nginx and upstart config?',
       default: true
@@ -51,6 +57,7 @@ var AposserverGenerator = yeoman.generators.Base.extend({
       this.user_settings = {}
       this.user_settings.server_name = this._.capitalize(this._.camelize(props.server_name));
       this.user_settings.needs_mongodb = props.mongodb_support;
+      this.user_settings.needs_socketio = props.socketio_support;
       if (props.nginx_support) {
         var prompts = [{
           type: 'input',
