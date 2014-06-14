@@ -1,6 +1,8 @@
 "use strict"
 
+http          = require 'http'
 express       = require 'express'
+<% if(needs_socketio) { %>socketio      = require 'socket.io'<% } %>
 bodyParser    = require 'body-parser'
 config        = require './config/config'
 {MongoClient} = require 'mongodb'
@@ -8,6 +10,8 @@ config        = require './config/config'
 class <%= server_name %>
   constructor: ->
     @app = express()
+    @server = http.createServer @app
+    <% if(needs_socketio) { %>@io  = socketio @server<% } %>
     @app.use express.static __dirname
     @app.use bodyParser()
     @configure()
@@ -23,10 +27,11 @@ class <%= server_name %>
     @app.get '/', (req, res) -> res.sendfile 'index.html'
     
   start: (callback) ->
-    @app.listen config.port, callback
+    port = +process.argv[2] || config.port || 9090
+    @server.listen port, () -> callback port
 
 if require.main is module
   server_instance = new <%= server_name %>()
   server_instance.init (error) ->
     if error then return console.log error
-    server_instance.start -> console.log "listening on port #{config.port}."
+    server_instance.start (port) -> console.log "listening on port #{port}."

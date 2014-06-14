@@ -1,6 +1,4 @@
 {
-  <% if(ports.length === 1) { %>
-  "port": <%= ports[0] %>,
-  <% } %>
+  <% if(ports.length === 1) { %>"port": <%= ports[0] %>,<% } %>
   "id": "<%= nginx_app %>"
 }

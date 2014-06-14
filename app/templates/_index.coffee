@@ -2,9 +2,7 @@
 
 http       = require 'http'
 express    = require 'express'
-<% if(needs_socketio) { %>
-socketio   = require 'socket.io'
-<% } %>
+<% if(needs_socketio) { %>socketio   = require 'socket.io'<% } %>
 bodyParser = require 'body-parser'
 config     = require './config/config'
 
@@ -12,9 +10,7 @@ class <%= server_name %>
   constructor: ->
     @app = express()
     @server = http.createServer @app
-    <% if(needs_socketio) { %>
-    @io  = socketio @server
-    <% } %>
+    <% if(needs_socketio) { %>@io  = socketio @server<% } %>
     @app.use express.static __dirname
     @app.use bodyParser()
     @configure()
