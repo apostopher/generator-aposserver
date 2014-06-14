@@ -82,6 +82,8 @@ var AposserverGenerator = yeoman.generators.Base.extend({
 
     this.template('_package.json', 'package.json', this.user_settings);
     this.template('_npm-shrinkwrap.json', 'npm-shrinkwrap.json', this.user_settings);
+    this.template('_index.html', 'index.html', this.user_settings);
+
 
     if (this.user_settings.needs_mongodb) {
       this.template('_index_with_mongo.coffee', 'src/index.coffee', this.user_settings);
