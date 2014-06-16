@@ -86,6 +86,7 @@ var AposserverGenerator = yeoman.generators.Base.extend({
     this.mkdir('test/src');
 
     this.copy('_Cakefile', 'Cakefile');
+    this.copy('gitignore', '.gitignore');
 
     this.template('_package.json', 'package.json', this.user_settings);
     this.template('_npm-shrinkwrap.json', 'npm-shrinkwrap.json', this.user_settings);
