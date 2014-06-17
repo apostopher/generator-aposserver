@@ -4,6 +4,7 @@ var path = require('path');
 var yeoman = require('yeoman-generator');
 var yosay = require('yosay');
 var chalk = require('chalk');
+var path  = require('path');
 
 
 var AposserverGenerator = yeoman.generators.Base.extend({
@@ -31,7 +32,7 @@ var AposserverGenerator = yeoman.generators.Base.extend({
       type: 'input',
       name: 'server_name',
       message: 'What would you like to call your server?',
-      default: this.appname
+      default: path.basename(path.resolve(process.cwd() + "/../"))
     },
     {
       type: 'confirm',
@@ -61,6 +62,11 @@ var AposserverGenerator = yeoman.generators.Base.extend({
       if (props.nginx_support) {
         var prompts = [{
           type: 'input',
+          name: 'deploy_location',
+          message: 'Could you please tell me the deploy location?',
+          default: '/home/apos/modules'
+        },{
+          type: 'input',
           name: 'nginx_ports',
           message: "What ports do you want '" + this.user_settings.server_name + "' to listen on?",
           default: "9090"
@@ -69,7 +75,7 @@ var AposserverGenerator = yeoman.generators.Base.extend({
           self.user_settings.nginx_settings = {
             nginx_app: self.user_settings.server_name.toLowerCase(),
             ports: self._getPortsRange(nginx_props.nginx_ports),
-            root: process.cwd()
+            deploy_location: nginx_props.deploy_location
           };
           done();
         });
