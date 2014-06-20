@@ -7,8 +7,6 @@ bodyParser    = require 'body-parser'
 config        = require './config/config'
 {MongoClient} = require 'mongodb'
 
-RESTController = require './RESTController'
-
 class <%= server_name %>
   constructor: ->
     @app = express()
@@ -16,13 +14,13 @@ class <%= server_name %>
     <% if(needs_socketio) { %>@io  = socketio @server<% } %>
     @app.use express.static __dirname
     @app.use bodyParser()
-    @configure()
 
   init: (callback) ->
     MongoClient.connect "mongodb://localhost:27017/<%= server_name %>", (error, db) =>
       if error then return callback error
       @db = db
       @collection = db.collection 'docs'
+      @configure()
       callback null
 
   configure: ->
