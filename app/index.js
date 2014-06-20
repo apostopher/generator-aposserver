@@ -101,6 +101,7 @@ var AposserverGenerator = yeoman.generators.Base.extend({
 
     if (this.user_settings.needs_mongodb) {
       this.template('_index_with_mongo.coffee', 'src/index.coffee', this.user_settings);
+      this.copy('_RESTController.coffee', 'src/RESTController.coffee');
     } else{
       this.template('_index.coffee', 'src/index.coffee', this.user_settings);
     };

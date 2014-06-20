@@ -7,6 +7,8 @@ bodyParser    = require 'body-parser'
 config        = require './config/config'
 {MongoClient} = require 'mongodb'
 
+RESTController = require './RESTController'
+
 class <%= server_name %>
   constructor: ->
     @app = express()
