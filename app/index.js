@@ -119,7 +119,7 @@ var AposserverGenerator = yeoman.generators.Base.extend({
       };
       
     };
-    exec('npm shrinkwrap', done);
+    exec('npm shrinkwrap', {cwd: process.cwd()}, done);
   },
 
   projectfiles: function () {
