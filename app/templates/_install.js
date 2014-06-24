@@ -16,8 +16,8 @@ if (require.main === module) {
 
   // STEP 3: restart nginx
   console.log("restarting nginx...");
-  exec('service nginx stop', {async:false});
-  exec('service nginx start', {async:false});
+  exec('service nginx stop');
+  exec('service nginx start');
 
   // STEP 4: copy monit config to /etc/init/
   console.log("Copying upstart configuration...");
