@@ -5,7 +5,7 @@ var yeoman = require('yeoman-generator');
 var yosay = require('yosay');
 var chalk = require('chalk');
 var path  = require('path');
-var exec  = require('child_process').exec;
+require('shelljs/global');
 
 var AposserverGenerator = yeoman.generators.Base.extend({
 
@@ -19,6 +19,7 @@ var AposserverGenerator = yeoman.generators.Base.extend({
 
     this.on('end', function () {
       this.npmInstall();
+      exec('npm shrinkwrap');
     });
   },
 
@@ -87,7 +88,6 @@ var AposserverGenerator = yeoman.generators.Base.extend({
   },
 
   app: function () {
-    var done = this.async();
     this.mkdir('src');
     this.mkdir('config');
     this.mkdir('test');
@@ -119,7 +119,6 @@ var AposserverGenerator = yeoman.generators.Base.extend({
       };
       
     };
-    exec('npm shrinkwrap', {cwd: process.cwd()}, done);
   },
 
   projectfiles: function () {
