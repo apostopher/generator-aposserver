@@ -5,7 +5,7 @@ var yeoman = require('yeoman-generator');
 var yosay = require('yosay');
 var chalk = require('chalk');
 var path  = require('path');
-
+require('shelljs/global');
 
 var AposserverGenerator = yeoman.generators.Base.extend({
 
@@ -65,7 +65,7 @@ var AposserverGenerator = yeoman.generators.Base.extend({
           type: 'input',
           name: 'deploy_location',
           message: 'Could you please tell me the deploy location?',
-          default: '/home/apos/modules'
+          default: '/home/apos/modules/' + props.server_name
         },{
           type: 'input',
           name: 'nginx_ports',
@@ -87,6 +87,7 @@ var AposserverGenerator = yeoman.generators.Base.extend({
   },
 
   app: function () {
+    var done = this.async();
     this.mkdir('src');
     this.mkdir('config');
     this.mkdir('test');
@@ -96,7 +97,6 @@ var AposserverGenerator = yeoman.generators.Base.extend({
     this.copy('gitignore', '.gitignore');
 
     this.template('_package.json', 'package.json', this.user_settings);
-    this.template('_npm-shrinkwrap.json', 'npm-shrinkwrap.json', this.user_settings);
     this.template('_index.html', 'index.html', this.user_settings);
 
 
@@ -119,6 +119,9 @@ var AposserverGenerator = yeoman.generators.Base.extend({
       };
       
     };
+    exec('npm shrinkwrap', {silent:true, async: true}, function(code, output){
+      done();
+    });
   },
 
   projectfiles: function () {
