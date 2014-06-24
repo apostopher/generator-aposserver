@@ -27,6 +27,7 @@ var AposserverGenerator = yeoman.generators.Base.extend({
 
     // Have Yeoman greet the user.
     this.log(yosay('Welcome to the marvelous Aposserver generator!'));
+    this.log('Current working directory is:' + process.cwd());
 
     var prompts = [{
       type: 'input',
@@ -108,6 +109,7 @@ var AposserverGenerator = yeoman.generators.Base.extend({
     if (this.user_settings.nginx_settings) {
       var nginx_app_name = this.user_settings.nginx_settings.nginx_app;
       this.template('_nginx.conf', 'nginx.conf', this.user_settings.nginx_settings);
+      this.template('_install.js', 'install.js', this.user_settings.nginx_settings);
       this.template('_config.json', 'config/config.json', this.user_settings.nginx_settings);
       if (this.user_settings.nginx_settings.ports.length > 1) {
         this.template('_upstart-master.conf',  nginx_app_name + '-master.conf', this.user_settings.nginx_settings);
