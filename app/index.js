@@ -18,8 +18,13 @@ var AposserverGenerator = yeoman.generators.Base.extend({
     this.pkg = require('../package.json');
 
     this.on('end', function () {
-      this.npmInstall(function(){
-        exec('npm shrinkwrap');
+      this.installDependencies({
+        bower: false,
+        npm: true,
+        skipInstall: false,
+        callback: function () {
+          exec('npm shrinkwrap');
+        }
       });
     });
   },
