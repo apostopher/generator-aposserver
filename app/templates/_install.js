@@ -12,7 +12,7 @@ if (require.main === module) {
 
   // STEP 2: create a softlink in /etc/nginx/sites-enabled/
   console.log("Creating nginx symlink...");
-  ln('-sf', nginx_conf, '<%= nginx_app %>');
+  ln('-sf', nginx_conf, '/etc/nginx/sites-enabled/<%= nginx_app %>');
 
   // STEP 3: restart nginx
   console.log("restarting nginx...");
