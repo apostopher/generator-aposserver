@@ -2,7 +2,14 @@
 
 "use strict"
 
+var chalk = require('chalk');
 require('shelljs/global');
+
+function showHappy(name){
+  console.log("Installed!");
+  console.log("\nto start:\n", chalk.blue('sudo start ' + name));
+  console.log("\nto stop:\n", chalk.blue('sudo stop ' + name));
+};
 
 if (require.main === module) {
   // STEP 1: copy nginx file to /etc/nginx/sites-available/
@@ -26,8 +33,9 @@ if (require.main === module) {
   <% if (ports.length > 1) { %>
   var upstart_master_conf = "<%= nginx_app %>-master.conf";
   cp('-f', './' + upstart_master_conf, '/etc/init/' + upstart_master_conf);
+  showHappy('<%= nginx_app %>-master');
+  <% } else { %>
+  showHappy('<%= nginx_app %>');
   <% }; %>
-
-  console.log("Installed!");
 };
 

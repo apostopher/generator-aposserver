@@ -34,7 +34,7 @@ var AposserverGenerator = yeoman.generators.Base.extend({
 
     // Have Yeoman greet the user.
     this.log(yosay('Welcome to the marvelous Aposserver generator!'));
-    this.log('Current working directory is:' + process.cwd());
+    this.log('Current working directory is: ' + chalk.blue(process.cwd()));
 
     var prompts = [{
       type: 'input',
