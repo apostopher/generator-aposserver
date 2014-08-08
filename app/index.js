@@ -80,9 +80,10 @@ var AposserverGenerator = yeoman.generators.Base.extend({
           default: "9090"
         }];
         this.prompt(prompts, function (nginx_props){
+          ports = self._getPortsRange(nginx_props.nginx_ports);
           self.user_settings.nginx_settings = {
             nginx_app: self.user_settings.server_name.toLowerCase(),
-            ports: self._getPortsRange(nginx_props.nginx_ports),
+            ports: ports,
             deploy_location: nginx_props.deploy_location
           };
           done();
@@ -104,8 +105,9 @@ var AposserverGenerator = yeoman.generators.Base.extend({
 
     this.template('_package.json', 'package.json', this.user_settings);
     this.template('_index.html', 'index.html', this.user_settings);
+    this.template('_config.json', 'config/config.json', this.user_settings);
 
-
+    // Copy index.coffee
     if (this.user_settings.needs_mongodb) {
       this.template('_index_with_mongo.coffee', 'src/index.coffee', this.user_settings);
     } else{
@@ -116,7 +118,6 @@ var AposserverGenerator = yeoman.generators.Base.extend({
       var nginx_app_name = this.user_settings.nginx_settings.nginx_app;
       this.template('_nginx.conf', 'nginx.conf', this.user_settings.nginx_settings);
       this.template('_install.js', 'install.js', this.user_settings.nginx_settings);
-      this.template('_config.json', 'config/config.json', this.user_settings.nginx_settings);
       if (this.user_settings.nginx_settings.ports.length > 1) {
         this.template('_upstart-master.conf',  nginx_app_name + '-master.conf', this.user_settings.nginx_settings);
         this.template('_upstart.conf', nginx_app_name + '.conf', this.user_settings.nginx_settings);
