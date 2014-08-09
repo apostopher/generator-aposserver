@@ -27,24 +27,6 @@ class <%= server_name %>
     port = +process.argv[2] || config.port || 9090
     @server.listen port, () -> callback port
 
-  shutdown: (error, req, res) ->
-    console.error 'error', error.stack
-    try
-      dietimer = setTimeout ->
-        console.log 'bye bye world :-('
-        process.exit 1
-      , 30000
-      dietimer.unref()
-      @server.close()
-
-      res.statusCode = 500
-      res.setHeader 'content-type', 'text/plain'
-      res.end 'Oops, there was a problem!\n'
-    catch error2
-      console.error 'Error sending 500!', error2.stack
-  
-
-
 if require.main is module
   server_instance = new <%= server_name %>()
   server_instance.start (port) -> console.log "listening on port #{port}."
