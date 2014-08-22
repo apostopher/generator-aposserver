@@ -80,7 +80,7 @@ var AposserverGenerator = yeoman.generators.Base.extend({
           default: "9090"
         }];
         this.prompt(prompts, function (nginx_props){
-          ports = self._getPortsRange(nginx_props.nginx_ports);
+          var ports = self._getPortsRange(nginx_props.nginx_ports);
           self.user_settings.nginx_settings = {
             nginx_app: self.user_settings.server_name.toLowerCase(),
             ports: ports,
